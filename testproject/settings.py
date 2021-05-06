@@ -41,11 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # own apps
     'myapp',
-    'album'
+    'album',
+    'storages'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    #Whitenoise for middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,13 +129,23 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIR =[ BASE_DIR / 'static/']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+#Whitenoise for statc files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT =  BASE_DIR / 'media/'
+
+#Aws media storage configurations
+AWS_ACCESS_KEY_ID = 'AKIARVGPJVYVGB6OFLTK'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'nasim.secpstorage'
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
